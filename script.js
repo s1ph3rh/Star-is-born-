@@ -67,6 +67,29 @@ function playLocalTournament() {
 function scouted() {
     gameText.innerText = `You’re scouted by a local academy. The journey begins...`;
     choices.innerHTML = `<button onclick="startGame()">Play Again</button>`;
-}
+}function simulateMatch() {
+    const teamSkill = Math.floor(Math.random() * 40 + 50); // teammate avg
+    const totalSkill = (player.skill + teamSkill) / 2;
+    const matchRoll = Math.random() * 100;
+
+    let result = "Draw";
+    if (matchRoll < totalSkill - 10) result = "Win";
+    else if (matchRoll > totalSkill + 10) result = "Loss";
+
+    const performedWell = Math.random() < (player.skill / 100);
+    const followerChange = performedWell ? Math.floor(Math.random() * 200 + 100) : -Math.floor(Math.random() * 100 + 50);
+    const fameChange = performedWell ? 5 : -2;
+
+    // Apply changes
+    player.fame += fameChange;
+    player.followers += followerChange;
+
+    return {
+        result,
+        performedWell,
+        fameChange,
+        followerChange
+    };
+        }
 
 startGame();
